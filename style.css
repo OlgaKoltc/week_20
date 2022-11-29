@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;;
+    src: url();
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(182, 138, 224);
+    margin: 0 auto;
+    text-align: center;
+}
+.heroes {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80%;
+}
+h1 {
+    color: rgb(120, 30, 204);
+    font-size: 42px;
+}
+h2 {
+    color: rgb(49, 5, 88);
+    font-size: 32px;
+}
+.heroes__photo {
+    margin: 30px 30px 30px 30px;
+}
+img {
+    width: 200px;
+    height: 250px;
+    margin: 0px 20px 20px 0px;
+}
