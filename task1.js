@@ -36,23 +36,74 @@ let json =
 "friends": "Мстители, Фантастическая четверка, Люди Икс"
 }
 ]`
-document.addEventListener("DOMContentLoaded", function(event){
-  let heroes = JSON.parse(json);
-  const imageOut = document.querySelector('.heroes__photo');
-  const heroesInfo = document.querySelector('.heroes__about');
-  const heroName = document.querySelector('.heroes__name');
-  for (let heroe of heroes){
+const imageOut = document.querySelector('.heroes__photo');
+const heroName = document.querySelector('.heroes__name');
+const heroUniv = document.querySelector('.heroes__universe');
+const heroAlt = document.querySelector('.heroes__alterego');
+const heroOccup = document.querySelector('.heroes__occupation');
+const heroChar = document.querySelector('.heroes__characteristics');
+
+const heroRating = document.querySelector('.heroes-rating');  
+const radingText = document.querySelector('.heroes-rating__text');
+let btn = document.querySelector('.heroes-rating__btn');
+
+let heroes = JSON.parse(json);
+const ratings = [1,2,3,4,5,6,7,8,9,10];
+
+  for (let i = 0; i < heroes.length; i++) {
     let img = document.createElement('img');
-    img.setAttribute('data',heroe.image)
-    img.src = heroe.image;
+    img.setAttribute('data-key', i)
+    img.src = heroes[i].image;
 imageOut.append(img)
   }
-  imageOut.addEventListener('click', showInfo)
-  function showInfo(event) {
-const key = event.target.attributes.data.value
-if (key === undefined) {
-  return true;
-}
-heroName.textContent = heroes[key].name // и тут я не успеваю разобраться как по ключу найти нужные свойства объекта
+
+  for (let i = 0; i < ratings.length; i++) {
+    let input = document.createElement('input');
+    input.setAttribute('data-rate', i+1);
+    input.type = 'radio';
+    input.name = 'hero-rating'
+    heroRating.append(input)
   }
-})
+
+  imageOut.addEventListener('click', showInfo)
+  function showInfo (event){
+      const key = event.target.dataset['key'];
+     // console.log(key);
+      if (key === undefined) {
+          return true;
+        }
+heroName.textContent = heroes[key].name
+heroUniv.textContent = heroes[key].universe
+heroAlt.textContent = heroes[key].alterego
+heroOccup.textContent = heroes[key].occupation
+heroChar.textContent = heroes[key].characteristics
+radingText.innerHTML = `Оцените героя от 1 до 10`
+heroRating.classList.add('act');
+
+
+btn = document.createElement('button');
+btn.innerHTML = "Ok";
+radingText.append(btn)
+
+document.querySelectorAll('.heroes__photo img').forEach(item => item.classList.remove('active'));
+event.target.classList.add('active');
+
+  }
+
+  //btn.addEventListener('click',  setValue)
+
+  heroRating.addEventListener('change', setValue)
+  function setValue (element) {
+    let heroValue = element.target.dataset['rate'];
+console.log(heroValue);
+btn.addEventListener('click', function () {
+localStorage.setItem('heroValue', heroValue);
+let localName = document.querySelector('.heroes__name').textContent;
+localStorage.setItem('heroName', localName);
+    console.log(localStorage.getItem('heroValue'));
+    console.log(localStorage.getItem('heroName'));
+    //let heroValues.push(heroes.name, localValue)
+
+}
+ )
+    }
